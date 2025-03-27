@@ -25,8 +25,8 @@
 				align-items: center;
 				clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
 				position: relative;
-				padding: 5px;
-				background: linear-gradient(45deg, green, lightgreen, darkgreen);
+				padding: 10px;
+				background: linear-gradient(45deg, #ff8c00, #ff4500);
 			}
 
 			.hexagon-border-layer-1 {
@@ -112,7 +112,7 @@
 			.hexagon-inner .title {
 				font-size: 18px;
 				font-weight: bold;
-				margin-top: 3rem;
+				margin-top: 5rem;
 			}
 
 			.hexagon-inner img {
@@ -170,36 +170,44 @@
 				background: #f90;
 				color: white;
 			}
+
+			/* Add styles for V lines */
+			.v-lines {
+				display: flex;
+				justify-content: center;
+				gap: 4px;
+				position: absolute;
+				top: 10px;
+			}
+
+			.v-lines .v-line {
+				/* width: 20px; */
+				height: 75px;
+				border: gold 3px solid;
+				box-shadow: 0 0 5px yellow, 0 0 10px yellow;
+				transform: rotate(0deg);
+				position: relative;
+			}
 		</style>
 	</head>
 	<body>
 		<div id="badge" class="hexagon-border pac">
-			<div class="hexagon-border-layer-1">
-				<div class="hexagon-border-layer-2">
-					<div class="hexagon-border-layer-3">
-						<div class="hexagon-border-layer-4">
-							<div class="hexagon-border-layer-5">
-								<div class="hexagon-border-layer-6">
-									<div class="hexagon-inner">
-										<div class="title">PEMUDA PANCASILA</div>
-										<img
-											src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo-Pemuda-Pancasila-PNG-Warna.png"
-											alt="Logo Pemuda Pancasila"
-										/>
-										<div class="content-bottom">
-											<div class="name">Muhammad Taqwa Aziz</div>
-											<div class="id">620406000271</div>
-											<div class="status">
-												<span class="status-dot"></span>
-												AKTIF
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+			<div class="hexagon-inner">
+				<!-- Added container for V lines -->
+				<div class="title">PEMUDA PANCASILA</div>
+				<img
+					src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo-Pemuda-Pancasila-PNG-Warna.png"
+					alt="Logo Pemuda Pancasila"
+				/>
+				<div class="content-bottom">
+					<div class="name">Muhammad Taqwa Aziz</div>
+					<div class="id">620406000271</div>
+					<div class="status">
+						<span class="status-dot"></span>
+						AKTIF
 					</div>
 				</div>
+				<div class="v-lines"></div>
 			</div>
 		</div>
 
@@ -216,27 +224,47 @@
 				const badge = document.getElementById("badge");
 				badge.className = "hexagon-border " + type;
 
+				// Update background
 				switch (type) {
 					case "pac":
-						badge.style.background =
-							"linear-gradient(45deg, green, lightgreen, darkgreen)";
-						break;
 					case "mpc":
-						badge.style.background =
-							"linear-gradient(45deg, blue, lightblue, darkblue)";
-						break;
 					case "mpw":
-						badge.style.background = "linear-gradient(45deg, #C33764, #1D2671)";
-						break;
 					case "mpn":
-						badge.style.background = "linear-gradient(45deg, #CAC531, #F3F9A7)";
-						break;
 					case "superadmin":
-						badge.style.background = "grey";
+						badge.style.background = "linear-gradient(45deg, #FF8C00, #FF4500)";
 						break;
 					default:
-						badge.style.background =
-							"linear-gradient(45deg, green, lightgreen, darkgreen)";
+						badge.style.background = "linear-gradient(45deg, #FF8C00, #FF4500)";
+						break;
+				}
+
+				// Update V lines
+				const vLinesContainer = badge.querySelector(".v-lines");
+				vLinesContainer.innerHTML = ""; // Clear existing lines
+				let vCount = 0;
+
+				switch (type) {
+					case "pac":
+						vCount = 1;
+						break;
+					case "mpc":
+						vCount = 2;
+						break;
+					case "mpw":
+						vCount = 3;
+						break;
+					case "mpn":
+						vCount = 4;
+						break;
+					default:
+						vCount = 0;
+						break;
+				}
+
+				for (let i = 0; i < vCount; i++) {
+					const vLine = document.createElement("div");
+					vLine.className = "v-line";
+					vLinesContainer.appendChild(vLine);
 				}
 			}
 		</script>
