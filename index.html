@@ -256,6 +256,9 @@
 					case "mpn":
 						vCount = 4;
 						break;
+					case "superadmin":
+						vCount = 5; // No additional lines for superadmin
+						break;
 					default:
 						vCount = 0;
 						break;
@@ -264,6 +267,10 @@
 				for (let i = 0; i < vCount; i++) {
 					const vLine = document.createElement("div");
 					vLine.className = "v-line";
+					if (type === "superadmin") {
+						vLine.style.border = "orange 3px solid";
+						vLine.style.boxShadow = "0 0 5px orange, 0 0 10px orange";
+					}
 					vLinesContainer.appendChild(vLine);
 				}
 			}
