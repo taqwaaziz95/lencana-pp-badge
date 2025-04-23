@@ -5,6 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Pemuda Pancasila Badge</title>
 		<style>
+			:root {
+				color-scheme: only light;
+			}
+
 			body {
 				background: #fff;
 				margin: 0;
@@ -15,6 +19,7 @@
 				justify-content: center;
 				align-items: center;
 				font-family: "Segoe UI", sans-serif;
+				color: white;
 			}
 
 			.hexagon-border {
@@ -29,61 +34,11 @@
 				background: linear-gradient(45deg, #ff8c00, #ff4500);
 			}
 
-			.hexagon-border-layer-1 {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				clip-path: inherit;
-				background: white;
-				padding: 5px;
-			}
-
-			.hexagon-border-layer-2 {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				clip-path: inherit;
-				background: orange;
-				padding: 5px;
-			}
-
-			.hexagon-border-layer-3 {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				clip-path: inherit;
-				background: white;
-				padding: 5px;
-			}
-
-			.hexagon-border-layer-4 {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				clip-path: inherit;
-				background: orange;
-				padding: 5px;
-			}
-
-			.hexagon-border-layer-5 {
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				clip-path: inherit;
-				background: white;
-				padding: 5px;
-			}
-
+			.hexagon-border-layer-1,
+			.hexagon-border-layer-2,
+			.hexagon-border-layer-3,
+			.hexagon-border-layer-4,
+			.hexagon-border-layer-5,
 			.hexagon-border-layer-6 {
 				width: 100%;
 				height: 100%;
@@ -91,6 +46,25 @@
 				justify-content: center;
 				align-items: center;
 				clip-path: inherit;
+				padding: 5px;
+			}
+
+			.hexagon-border-layer-1 {
+				background: white;
+			}
+			.hexagon-border-layer-2 {
+				background: orange;
+			}
+			.hexagon-border-layer-3 {
+				background: white;
+			}
+			.hexagon-border-layer-4 {
+				background: orange;
+			}
+			.hexagon-border-layer-5 {
+				background: white;
+			}
+			.hexagon-border-layer-6 {
 				background: orange;
 				padding: 8px;
 			}
@@ -127,7 +101,9 @@
 
 			.hexagon-inner .id {
 				font-size: 14px;
-				color: #ccc;
+				font-weight: bold;
+				color: white;
+				text-decoration: none;
 			}
 
 			.hexagon-inner .status {
@@ -171,7 +147,6 @@
 				color: white;
 			}
 
-			/* Add styles for V lines */
 			.v-lines {
 				display: flex;
 				justify-content: center;
@@ -181,7 +156,6 @@
 			}
 
 			.v-lines .v-line {
-				/* width: 20px; */
 				height: 75px;
 				border: gold 3px solid;
 				box-shadow: 0 0 5px yellow, 0 0 10px yellow;
@@ -193,7 +167,6 @@
 	<body>
 		<div id="badge" class="hexagon-border pac">
 			<div class="hexagon-inner">
-				<!-- Added container for V lines -->
 				<div class="title">PEMUDA PANCASILA</div>
 				<img
 					src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Logo-Pemuda-Pancasila-PNG-Warna.png"
@@ -201,7 +174,7 @@
 				/>
 				<div class="content-bottom">
 					<div class="name">Muhammad Taqwa Aziz</div>
-					<div class="id">620406000271</div>
+					<div class="id" id="member-id">620406000271</div>
 					<div class="status">
 						<span class="status-dot"></span>
 						AKTIF
@@ -224,25 +197,12 @@
 				const badge = document.getElementById("badge");
 				badge.className = "hexagon-border " + type;
 
-				// Update background
-				switch (type) {
-					case "pac":
-					case "mpc":
-					case "mpw":
-					case "mpn":
-					case "superadmin":
-						badge.style.background = "linear-gradient(45deg, #FF8C00, #FF4500)";
-						break;
-					default:
-						badge.style.background = "linear-gradient(45deg, #FF8C00, #FF4500)";
-						break;
-				}
+				badge.style.background = "linear-gradient(45deg, #FF8C00, #FF4500)";
 
-				// Update V lines
 				const vLinesContainer = badge.querySelector(".v-lines");
-				vLinesContainer.innerHTML = ""; // Clear existing lines
-				let vCount = 0;
+				vLinesContainer.innerHTML = "";
 
+				let vCount = 0;
 				switch (type) {
 					case "pac":
 						vCount = 1;
@@ -257,10 +217,7 @@
 						vCount = 4;
 						break;
 					case "superadmin":
-						vCount = 5; // No additional lines for superadmin
-						break;
-					default:
-						vCount = 0;
+						vCount = 5;
 						break;
 				}
 
@@ -273,6 +230,19 @@
 					}
 					vLinesContainer.appendChild(vLine);
 				}
+			}
+
+			// Safari specific patch
+			const isSafari = /^((?!chrome|android).)*safari/i.test(
+				navigator.userAgent
+			);
+			if (isSafari) {
+				const idElem = document.getElementById("member-id");
+				idElem.style.webkitTextSecurity = "none";
+				idElem.style.textDecoration = "none";
+				idElem.style.color = "white";
+				idElem.style.fontWeight = "bold";
+				idElem.style.pointerEvents = "none";
 			}
 		</script>
 	</body>
